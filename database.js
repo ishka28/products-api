@@ -50,8 +50,19 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
 
             }
         })
-
-
+        
+        // Create Customers Table
+        db.run(`CREATE TABLE IF NOT EXISTS customers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            email TEXT UNIQUE,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )`, (err) => {
+            if (!err) {
+                var insert = 'INSERT INTO customers (name, email) VALUES (?,?)';
+                db.run(insert, ["Your Name", "yourname@example.com"]); // Replace "Your Name" with your actual name
+            }
+        })
 
     }
 })
