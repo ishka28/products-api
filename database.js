@@ -46,12 +46,23 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             } else {
                 // Table just created, creating some rows
                 var insert = 'INSERT INTO suppliers (supplierName, address, joinedDate, mobileNo) VALUES (?,?,?,?)'
-                db.run(insert, ["D.J.Ishara", "345A ,R.A De Mel Road, Colombo 3", "16/3/2022", "0776600933"])
+                db.run(insert, ["D.J.Ishara", "345A ,R.A De Mel Road, Colombo 3", "16/3/2022", "0776600933"]);
 
             }
         })
 
-
+        // Create Customers Table
+        db.run(`CREATE TABLE IF NOT EXISTS customers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            email TEXT UNIQUE,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )`, (err) => {
+            if (!err) {
+                var insert = 'INSERT INTO customers (name, email) VALUES (?,?)';
+                db.run(insert, ["Ishka Insaaf", "ishkainsaf28@example.com"]);
+            }
+        })
 
     }
 })
